@@ -1,6 +1,9 @@
 
 GetApiData();
 
+var lastFetchedRate = DateTime.Today.AddDays(-1); 
+var cachedRate = "";
+
 function GetApiData()
 {
     
@@ -22,7 +25,35 @@ function GetApiData()
     
 }
 
+function SetCache()
+{
+    if  
+}
+
 function GetCache()
 {
-    
+
+    double timeSinceCheck = (DateTime.Now - lastUpdatedRate).TotalHours;
+
+    if (timeSinceCheck < 24)
+    {
+        return cachedRate;
+    }
+        var myObject = {"message": "Detta är texten i mitt objekt."};
+
+    sessionStorage.setItem("text", JSON.stringify(myObject));
+
+    document.querySelector("#show").addEventListener('click', () => {
+
+        let messageObject = JSON.parse(sessionStorage.getItem("text"));
+
+        alert(messageObject.message);
+
+    });
+
+    document.querySelector("#remove").addEventListener('click', () => {
+
+        sessionStorage.removeItem("text");
+
+    });
 }
