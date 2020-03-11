@@ -19,7 +19,45 @@
 
     <div id="container">
 
-        <div id="converter"></div>
+        <div id="converter">
+
+            <input type="number" id="amountToConvert"/>
+
+            <br/>
+
+            <label class="currencies">Från valuta</label>
+
+            <br/>
+
+            <select id="sellCurrency">
+                <option value="sek">SEK</option>                              
+              </select>
+
+            <br/>
+
+            <label class="currencies">Till valuta</label>
+
+            <br/>
+
+            <select id="buyCurrency">
+                <option value="euro">Euro</option>                             
+            </select>
+
+            <br/>
+
+            <button type="button">Konvertera</button>
+
+        </div>
+
+        <div id="result">
+
+                <label id="exchangeRate">Växelkurs:</label>        
+                <br/>       
+                <label id="buyCurrency">Euro</label>
+                <br/>
+                <label id="amountPostConversion">Det är blev totalen</label>
+
+        </div>
 
     </div>
 
