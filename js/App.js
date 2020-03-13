@@ -1,13 +1,26 @@
 
-
-var lastFetchedRates;
+var lastFetchedRates = new Date();
+lastFetchedRates.setDate(lastFetchedRates.getDate()-1);
 var timeSinceCheck ;
 
-GetApiData();
+document.querySelector("#convert").addEventListener('click', () => {
+
+    var ratesObject = GetApiData();
+
+let text = document.querySelector("#exchangeRate");
+text.innerHTML = JSON.stringify(ratesObject);
+
+});
 
 
+function addDays(date, days) 
+{
+    const copy = new Date(Number(date))
+    copy.setDate(date.getDate() + days)
+    return copy
+}
 
-function GetApiData()
+async function GetApiData()
 {    
     var url = 'https://api.exchangeratesapi.io/latest?base=SEK';
     
@@ -15,15 +28,15 @@ function GetApiData()
 
     var sessionRatesObject = JSON.parse(sessionStorage.getItem("rates"));
 
-    timeSinceCheck = (DateTime.Now - lastFetchedRates).TotalHours;
+    timeSinceCheck = (new Date() - lastFetchedRates).getHours;
 
-    if (sessionRatesObject == null || timeSinceCheck < 24)
+    if (sessionRatesObject == null || timeSinceCheck > 24)
     {
         currencyRates = currencyList = await fetch(url).then(response => response.json());
 
         sessionStorage.setItem("rates", JSON.stringify(currencyRates));
 
-        lastFetchedRates = DateTime.Now();
+        lastFetchedRates = new Date();
         
         return currencyRates;
     }
