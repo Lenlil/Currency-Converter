@@ -1,59 +1,34 @@
 
+
+var lastFetchedRates;
+var timeSinceCheck ;
+
 GetApiData();
 
-var lastFetchedRate = DateTime.Today.AddDays(-1); 
-var cachedRate = "";
+
 
 function GetApiData()
-{
-    
+{    
     var url = 'https://api.exchangeratesapi.io/latest?base=SEK';
-
-    let currencyList = await fetch(url).then(response => response.json());
-
-    // fetch(url)
-    // .then(response => response.json())
-    // .then(currency => {
-
-    //     let newOption = document.createElement('option');
-    //     let currencyName = document.createTextNode(currency.);
-    //     newTitleText.appendChild(title);
-
-    //     document.body.appendChild(newTitleText);
-
-    // });
     
-}
+    var currencyRates;
 
-function SetCache()
-{
-    if  
-}
+    var sessionRatesObject = JSON.parse(sessionStorage.getItem("rates"));
 
-function GetCache()
-{
+    timeSinceCheck = (DateTime.Now - lastFetchedRates).TotalHours;
 
-    double timeSinceCheck = (DateTime.Now - lastUpdatedRate).TotalHours;
-
-    if (timeSinceCheck < 24)
+    if (sessionRatesObject == null || timeSinceCheck < 24)
     {
-        return cachedRate;
+        currencyRates = currencyList = await fetch(url).then(response => response.json());
+
+        sessionStorage.setItem("rates", JSON.stringify(currencyRates));
+
+        lastFetchedRates = DateTime.Now();
+        
+        return currencyRates;
     }
-        var myObject = {"message": "Detta är texten i mitt objekt."};
-
-    sessionStorage.setItem("text", JSON.stringify(myObject));
-
-    document.querySelector("#show").addEventListener('click', () => {
-
-        let messageObject = JSON.parse(sessionStorage.getItem("text"));
-
-        alert(messageObject.message);
-
-    });
-
-    document.querySelector("#remove").addEventListener('click', () => {
-
-        sessionStorage.removeItem("text");
-
-    });
+    else
+    {
+        return sessionRatesObject;
+    }    
 }
