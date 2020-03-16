@@ -1,6 +1,7 @@
 
+var converter = new Converter();
+
 var lastFetchedRates = new Date().getHours() - 2;
-//lastFetchedRates.setDate(lastFetchedRates.getDate()-1);
 var timeSinceCheck;
 var sessionRatesObject;
 
@@ -8,27 +9,29 @@ var sellCurrency = document.querySelector("#sellCurrency");
 var buyCurrency = document.querySelector("#buyCurrency");
 
 GetApiData();
-
 DisplayData();
 
-// document.querySelector("#convert").addEventListener('click', () => {
+var convertButton = document.querySelector("#convert");
 
-//     var ratesObject = GetApiData();
+convertButton.addEventListener('click', () => {
+
+    let fromCurrency = sellCurrency.value;
+    let toCurrency = buyCurrency.value; 
+    let amount = amountToConvert.value;
     
-//     let text = document.querySelector("#exchangeRate");
-//     text.innerHTML = JSON.stringify(ratesObject);
-// });
+    GetApiData();
+    let result = converter.Exchange(fromCurrency, toCurrency, amount);
 
-function addDays(date, days) 
-{
-    const copy = new Date(Number(date));
-    copy.setDate(date.getDate() + days);
-    return copy;
-}
+    let displayResult = document.querySelector("#amountPostConversion"); 
+
+    displayResult.innerHTML = result.toString();
+
+});
+
 
 async function GetApiData()
 {    
-    var url = 'https://api.exchangeratesapi.io/latest';
+    var url = 'https://api.exchangeratesapi.io/latest?base=SEK';
     
     var currencyRates;    
 
@@ -36,19 +39,16 @@ async function GetApiData()
 
     if (timeSinceCheck >= 1)
     {
-        currencyRates = await fetch(url).then(response => response.json());                              
-
+        currencyRates = await fetch(url).then(response => response.json());                             
                         
         sessionStorage.setItem("rates", JSON.stringify(currencyRates));
 
-        lastFetchedRates = new Date().getHours();        
-        
-        //return currencyRates;
+        lastFetchedRates = new Date().getHours();              
+     
     }   
     else
     {
-        sessionRatesObject = JSON.parse(sessionStorage.getItem("rates"));
-        //return sessionRatesObject;
+        sessionRatesObject = JSON.parse(sessionStorage.getItem("rates"));              
     }    
 }
 
@@ -66,7 +66,5 @@ function DisplayData()
         
         sellCurrency.appendChild(rateOptionSell);
         buyCurrency.appendChild(rateOptionBuy);
-    }
-
-    
+    }    
 }
