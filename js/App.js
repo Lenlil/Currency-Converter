@@ -1,47 +1,72 @@
 
-var lastFetchedRates = new Date();
-lastFetchedRates.setDate(lastFetchedRates.getDate()-1);
-var timeSinceCheck ;
+var lastFetchedRates = new Date().getHours() - 2;
+//lastFetchedRates.setDate(lastFetchedRates.getDate()-1);
+var timeSinceCheck;
+var sessionRatesObject;
 
-document.querySelector("#convert").addEventListener('click', () => {
+var sellCurrency = document.querySelector("#sellCurrency");
+var buyCurrency = document.querySelector("#buyCurrency");
 
-    var ratesObject = GetApiData();
+GetApiData();
 
-let text = document.querySelector("#exchangeRate");
-text.innerHTML = JSON.stringify(ratesObject);
+DisplayData();
 
-});
+// document.querySelector("#convert").addEventListener('click', () => {
 
+//     var ratesObject = GetApiData();
+    
+//     let text = document.querySelector("#exchangeRate");
+//     text.innerHTML = JSON.stringify(ratesObject);
+// });
 
 function addDays(date, days) 
 {
-    const copy = new Date(Number(date))
-    copy.setDate(date.getDate() + days)
-    return copy
+    const copy = new Date(Number(date));
+    copy.setDate(date.getDate() + days);
+    return copy;
 }
 
 async function GetApiData()
 {    
-    var url = 'https://api.exchangeratesapi.io/latest?base=SEK';
+    var url = 'https://api.exchangeratesapi.io/latest';
     
-    var currencyRates;
+    var currencyRates;    
 
-    var sessionRatesObject = JSON.parse(sessionStorage.getItem("rates"));
+    timeSinceCheck = (new Date().getHours() - lastFetchedRates);
 
-    timeSinceCheck = (new Date() - lastFetchedRates).getHours;
-
-    if (sessionRatesObject == null || timeSinceCheck > 24)
+    if (timeSinceCheck >= 1)
     {
-        currencyRates = currencyList = await fetch(url).then(response => response.json());
+        currencyRates = await fetch(url).then(response => response.json());                              
 
+                        
         sessionStorage.setItem("rates", JSON.stringify(currencyRates));
 
-        lastFetchedRates = new Date();
+        lastFetchedRates = new Date().getHours();        
         
-        return currencyRates;
-    }
+        //return currencyRates;
+    }   
     else
     {
-        return sessionRatesObject;
+        sessionRatesObject = JSON.parse(sessionStorage.getItem("rates"));
+        //return sessionRatesObject;
     }    
+}
+
+function DisplayData()
+{
+    sessionRatesObject = JSON.parse(sessionStorage.getItem("rates"));
+
+    for(var rate in sessionRatesObject.rates)
+    {
+        var rateOptionSell = document.createElement('option');
+        rateOptionSell.appendChild(document.createTextNode(rate)); 
+        
+        var rateOptionBuy = document.createElement('option');
+        rateOptionBuy.appendChild(document.createTextNode(rate)); 
+        
+        sellCurrency.appendChild(rateOptionSell);
+        buyCurrency.appendChild(rateOptionBuy);
+    }
+
+    
 }
