@@ -5,7 +5,7 @@ var buyCurrency = document.querySelector("#buyCurrency");
 
 // Cache nedan
 var lastFetchedRates = new Date().getHours() - 2;
-var startDate = new Date.getDate();
+var startDate = new Date().getDate();
 var timeSinceCheck;
 
 FetchApiData();
@@ -21,9 +21,7 @@ convertButton.addEventListener('click', () => {
     FetchApiData();
     let result = converter.Exchange(fromCurrency, toCurrency, amount);
 
-    let displayResult = document.querySelector("#amountPostConversion"); 
-
-    displayResult.innerHTML = result.toString();
+    DisplayResult(fromCurrency, toCurrency, amount, result);   
 
 });
 
@@ -60,4 +58,12 @@ function DisplayData()
         sellCurrency.appendChild(rateOptionSell);
         buyCurrency.appendChild(rateOptionBuy);
     }    
+}
+
+function DisplayResult(fromCurrency, toCurrency, amount, result)
+{
+    let displayResult = document.querySelector("#amountPostConversion"); 
+    let displayRate = document.querySelector("#buyCurrencyText");    
+
+    displayResult.innerHTML = amount + " " + fromCurrency + " är värda " + result.toString() + " " + toCurrency;    
 }

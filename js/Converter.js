@@ -2,7 +2,6 @@ class Converter
 { 
     constructor()
     {
-
     }
 
     Exchange(sellCurrency, buyCurrency, amount)
@@ -12,11 +11,10 @@ class Converter
         let fromRate = this.GetPropertyValue(sessionRatesObject, sellCurrency);
         let toRate = this.GetPropertyValue(sessionRatesObject, buyCurrency);      
             
-        let sellCurrencyToSEK= (fromRate * amount);
-        let result = (toRate*sellCurrencyToSEK);
+        let sellCurrencyInSEK= (amount / fromRate);
+        let result = (sellCurrencyInSEK * toRate);
 
-        return result;
-    
+        return result;    
     }
 
     GetPropertyValue(object, propName) 
