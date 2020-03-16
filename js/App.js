@@ -5,6 +5,7 @@ var buyCurrency = document.querySelector("#buyCurrency");
 
 // Cache nedan
 var lastFetchedRates = new Date().getHours() - 2;
+var startDate = new Date.getDate();
 var timeSinceCheck;
 
 FetchApiData();
@@ -31,13 +32,12 @@ async function FetchApiData()
 {    
     var url = 'https://api.exchangeratesapi.io/latest?base=SEK';
     
-    var currencyRates;    
-
     timeSinceCheck = (new Date().getHours() - lastFetchedRates);
+    let dateNow = new Date().getDate();
 
-    if (timeSinceCheck >= 1)
+    if (startDate != dateNow || timeSinceCheck > 0)
     {
-        currencyRates = await fetch(url).then(response => response.json());                             
+        let currencyRates = await fetch(url).then(response => response.json());                             
                         
         sessionStorage.setItem("rates", JSON.stringify(currencyRates));
 
