@@ -8,44 +8,58 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <link href="styles/Valutaomvandlare.css" rel="stylesheet"/>  
-    <!-- <script type="text/javascript" src="js/Cache.js" defer></script>  
-    <script type="text/javascript" src="js/Api.js" defer></script>-->
+    <link href="styles/Valutaomvandlare.css" rel="stylesheet"/>   
     <script type="text/javascript" src="js/Converter.js" defer></script> 
     <script type="text/javascript" src="js/App.js" defer></script>
 </head>
 <body>
-    <header></header>
+    <header>
 
-    <div id="container">
+      <h3>Valutaomvandlare</h3>
 
-        <div id="converter">
+    </header>
+
+    <div id="container">        
+
+      <div id="converter"></div>
+            <label class="currencies">Ange belopp</label>
 
             <input type="number" id="amountToConvert"/>
 
             <br/>
 
-            <label class="currencies">Från valuta</label>
+            <div id="currencyDropdowns">
+            
+              <div id="selling">
 
-            <br/>
+                <label class="currencies">Från valuta</label>
 
-            <select id="sellCurrency">                
-              </select>
+                <br/>
 
-            <br/>
+                <select id="sellCurrency">                
+                  </select>
 
-            <label class="currencies">Till valuta</label>
+              </div>            
 
-            <br/>
+              <br/>
 
-            <select id="buyCurrency">                                            
-            </select>
+              <div id="buying">
 
-            <br/>
+                <label class="currencies">Till valuta</label>
 
-            <button type="button" id="convert">Konvertera</button>
+                <br/>
 
-        </div>
+                <select id="buyCurrency">                                            
+                </select>
+
+              </div>  
+            </div>       
+
+          <br/>
+
+          <button type="button" id="convert">Konvertera</button>
+
+        </div> 
 
         <div id="result">
 

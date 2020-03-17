@@ -14,7 +14,7 @@ class Converter
         let sellCurrencyInSEK= (amount / fromRate);
         let result = (sellCurrencyInSEK * toRate);
 
-        return result;    
+        return result.toFixed(2);   
     }
 
     GetPropertyValue(object, propName) 
