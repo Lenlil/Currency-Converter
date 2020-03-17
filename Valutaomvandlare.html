@@ -21,8 +21,9 @@
 
     <div id="container">        
 
-      <div id="converter"></div>
+      <div id="converter">
             <label class="currencies">Ange belopp</label>
+            <br/>
 
             <input type="number" id="amountToConvert"/>
 
@@ -39,9 +40,9 @@
                 <select id="sellCurrency">                
                   </select>
 
-              </div>            
+              </div>           
 
-              <br/>
+             
 
               <div id="buying">
 
@@ -57,15 +58,18 @@
 
           <br/>
 
-          <button type="button" id="convert">Konvertera</button>
+          <div id="lowerConverter">
+            <button type="button" id="convert">Konvertera</button>
+            <br/>
 
-        </div> 
+            <div id="result">
 
-        <div id="result">
+              <label id="amountPostConversion">Välj en valuta att konvertera!</label>
 
-                <label id="amountPostConversion"></label>
-
+            </div>
         </div>
+
+      </div>         
 
     </div>
 
